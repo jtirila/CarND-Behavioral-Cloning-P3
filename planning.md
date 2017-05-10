@@ -14,6 +14,7 @@
  
 ## TODO  
 
+ * Prepare an AWS environment for training the model
  * Implement a pipeline similar to that in lecture and 
    perform the same test runs that are performed in the lecture
    * Plan for plug and play changeable models (network structures)
