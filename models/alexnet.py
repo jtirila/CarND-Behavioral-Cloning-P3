@@ -7,7 +7,8 @@ import os
 CONCAT_AXIS = 3
 
 
-def train_save(features, values):
+def train_save(features, values, nb_epochs=5):
+    print("Training the model using the AlexNet architecture")
     inputs = Input(shape=(227, 227, 3))
     # resized_inputs = Lambda(lambda x: tf.image.resize_images(x, (227, 227)))(inputs)
     # branch_1_conv_1 = Conv2D(48, 11, 11, border_mode='same')(resized_inputs)
@@ -51,9 +52,11 @@ def train_save(features, values):
 
     model = Model(input=inputs, output=output)
     # sgd = optimizers.SDG(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-    model.compile(loss='mean_squared_error', optimizer='sgd')
+    model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
 
-    model.fit(features, values, validation_split=0.0, shuffle=True, nb_epoch=5, batch_size=128)
+    model.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epochs, batch_size=128)
     model.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'alexnet_model.h5'))
+
+    return model
 
 
