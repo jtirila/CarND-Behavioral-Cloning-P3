@@ -81,7 +81,7 @@ def train_save(features, values, nb_epochs=5):
 
     output.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
 
-    output.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epochs, batch_size=128)
+    output.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epochs, batch_size=24)
     output.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'alexnet_model.h5'))
 
     return output
