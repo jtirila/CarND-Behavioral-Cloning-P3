@@ -57,5 +57,5 @@ if __name__ == '__main__':
     print("Finished evaluating the model")
 
     print("About to produce some sample predictions")
-    print(zip(model.predict(features[:64]), values[:64]))
+    print(list(zip(model.predict(features[:64]), values[:64])))
 
