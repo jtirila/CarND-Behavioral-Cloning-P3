@@ -5,6 +5,7 @@ import models.single_layer_dense as sld
 import models.mlp as mlp
 import models.alexnet as alex
 import models.lenet as lenet
+from sklearn.utils import shuffle
 import os
 import sys
 
@@ -33,7 +34,8 @@ if __name__ == '__main__':
     print("Finished loading the images from files")
 
     # Temporarily using a smaller set of training data
-    # features = features[:512]
+    # features = features[:256]
+    # values = values[:256]
 
     if modelname == 'alex':
         print("About to resize images")
@@ -46,15 +48,14 @@ if __name__ == '__main__':
         features = np.array(list(map(lambda x: imresize(x, (32, 32)), features)))
         print("Finished resizing images")
 
-    # values = values[:512]
-
     # TODO: do something about the saved model name once all the models return it?
     print("About to train and save the model.")
     model = MODEL_LOOKUP_DICT[modelname].train_save(features, values)
+    features, values = shuffle(features, values)
     print("About to evaluate the model")
     model.evaluate(features[:128], values[:128])
     print("Finished evaluating the model")
 
     print("About to produce some sample predictions")
-    print(model.predict(features[:64]))
+    print(list(zip(model.predict(features[:64]), values[:64])))
 

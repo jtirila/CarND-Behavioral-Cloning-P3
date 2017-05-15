@@ -18,6 +18,7 @@ def train_save(features, values, nb_epoch=5):
     model.add(Dense(120, activation='relu'))
     model.add(Dense(84, activation='relu'))
     model.add(Dense(1))
+    model.add(Activation('tanh'))
 
     model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
 
