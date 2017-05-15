@@ -33,7 +33,8 @@ if __name__ == '__main__':
     print("Finished loading the images from files")
 
     # Temporarily using a smaller set of training data
-    # features = features[:512]
+    features = features[:256]
+    values = values[:256]
 
     if modelname == 'alex':
         print("About to resize images")
@@ -45,8 +46,6 @@ if __name__ == '__main__':
         # Temporarily using scipy's imresize until I learn how this can be done in Keras
         features = np.array(list(map(lambda x: imresize(x, (32, 32)), features)))
         print("Finished resizing images")
-
-    # values = values[:512]
 
     # TODO: do something about the saved model name once all the models return it?
     print("About to train and save the model.")
