@@ -7,8 +7,8 @@ import os
 CONCAT_AXIS = 3
 
 
-def train_save(features, values, nb_epochs=5):
-    print("Training the model using the AlexNet architecture")
+def train_save(features, values, nb_epoch=5):
+    print("Training the model using the AlexNet architecture, performing {} epochs".format(nb_epoch))
 
     input_layer = Sequential()
     input_layer.add(Lambda(lambda x: x, input_shape=(227, 227, 3)))
@@ -81,7 +81,7 @@ def train_save(features, values, nb_epochs=5):
 
     output.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
 
-    output.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epochs, batch_size=24)
+    output.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=24)
     output.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'alexnet_model.h5'))
 
     return output
