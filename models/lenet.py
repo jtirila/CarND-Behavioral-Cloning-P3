@@ -12,10 +12,10 @@ def train_save(features, values, nb_epoch=5):
     datagen = ImageDataGenerator(
         featurewise_center=True,
         featurewise_std_normalization=True,
-        rotation_range=10,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        horizontal_flip=True)
+        rotation_range=4,
+        width_shift_range=0.1,
+        height_shift_range=0.1,
+        horizontal_flip=False)
 
     features = features.astype('float32')
     datagen.fit(features)
@@ -48,6 +48,6 @@ def train_save(features, values, nb_epoch=5):
 
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mse'])
 
-    model.fit_generator(datagen.flow(features, values, batch_size=128, shuffle=True), samples_per_epoch=len(features) // 128, nb_epoch=nb_epoch)
+    model.fit_generator(datagen.flow(features, values, batch_size=128, shuffle=True), samples_per_epoch=features.shape[0], nb_epoch=nb_epoch)
     model.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'lenet_model.h5'))
     return model
