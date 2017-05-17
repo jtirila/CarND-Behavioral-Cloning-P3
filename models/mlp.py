@@ -8,8 +8,8 @@ import os
 def train_save(features, values, nb_epoch=10):
     print("Training the model using a simple multilayer perceptron architecture, performing {} epochs".format(nb_epoch))
     model = Sequential()
-    model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160, 320, 3)))
-    model.add(Flatten(input_shape=(100, 320, 3)))
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(100, 320, 3)))
+    model.add(Flatten())
     model.add(Dense(200, activation='relu'))
     model.add(Dense(160, activation='relu'))
     model.add(Dropout(0.2))

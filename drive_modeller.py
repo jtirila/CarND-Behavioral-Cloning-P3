@@ -11,6 +11,7 @@ import models.alexnet as alex
 import models.lenet as lenet
 import models.mlp as mlp
 import models.single_layer_dense as simple
+import models.simple_mlp as simple_mlp
 import models.single_layer_dense as sld
 from image_preprocessing.load_images import read_images_and_steering_angles
 
@@ -18,7 +19,7 @@ SIMPLE_DATA_BASE_PATH = os.path.join(os.path.dirname(__file__),
         os.pardir, 
         os.pardir, 'data', 'batch_1')
 
-MODEL_LOOKUP_DICT = {'alex': alex, 'simple': simple, 'sld': sld, 'lenet': lenet, 'mlp': mlp}
+MODEL_LOOKUP_DICT = {'alex': alex, 'simple': simple, 'simple_mlp': simple_mlp, 'sld': sld, 'lenet': lenet, 'mlp': mlp}
 
 
 if __name__ == '__main__':
@@ -57,7 +58,10 @@ if __name__ == '__main__':
     elif modelname == 'lenet':
         print("About to resize images")
         # Temporarily using scipy's imresize until I learn how this can be done in Keras
-        features = np.array(list(map(lambda x: imresize(x, (32, 32, 3)), features)))
+        print("Actually this will be skipped on this round.")
+        # features = np.array(list(map(lambda x: imresize(x, (32, 32, 3)), features)))
+        plt.imshow(features[0])
+        plt.show()
         print("Finished resizing images")
 
     if nb_epoch is not None:
@@ -76,5 +80,5 @@ if __name__ == '__main__':
     print("Finished evaluating the model")
 
     print("About to produce some sample predictions")
-    for num in range(128):
+    for num in range(min(len(features), 128)):
         print("Prediction: {}, training value: {}".format(model.predict(np.array([features[num]])), format(values[num])))

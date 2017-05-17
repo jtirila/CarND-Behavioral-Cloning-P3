@@ -5,7 +5,7 @@ import os
 
 def train_save(train_features, train_values, nb_epoch=5):
     model = Sequential()
-    model.add(Flatten(input_shape=(160, 320, 3)))
+    model.add(Flatten(input_shape=(100, 320, 3)))
     model.add(Dense(1))
     model.compile(loss="mse", optimizer="adam")
     model.fit(train_features, train_values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch)
