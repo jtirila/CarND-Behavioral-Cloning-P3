@@ -2,6 +2,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Input, merge, Lambda, Activation, Dropout, Cropping2D
 import tensorflow as tf
 from image_preprocessing.size_manipulations import resize_image_32_32, resize_image_128_128
+from image_preprocessing.color_manipulations import enhance_contrast
 import os
 
 
@@ -9,12 +10,13 @@ def train_save(features, values, nb_epoch=5):
     print("Training the model using the LeNet architecture, performing {} epochs".format(nb_epoch))
 
     model = Sequential()
-    model.add(Cropping2D(cropping=((60, 0), (0, 0)), input_shape=(160, 320, 3)))
-    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
+    model.add(Cropping2D(cropping=((60, 20), (0, 0)), input_shape=(160, 320, 3)))
+    # model.add(Lambda(lambda x: (x / 255.0) - 0.5))
     # model.add(Lambda(resize_image_128_128))
     # model.add(Conv2D(6, 5, 5, border_mode='same'))
     # model.add(Activation('relu'))
     # model.add(MaxPooling2D(pool_size=(4, 4), strides=(4, 4), border_mode='same'))
+    model.add(Lambda(enhance_contrast))
     model.add(Lambda(resize_image_32_32))
     model.add(Conv2D(6, 5, 5, border_mode='valid'))
     model.add(Activation('relu'))
