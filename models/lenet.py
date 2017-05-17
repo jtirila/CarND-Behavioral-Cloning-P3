@@ -1,6 +1,7 @@
 from keras.models import Sequential
-from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Input, merge, Lambda, Activation
+from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Input, merge, Lambda, Activation, Dropout, Cropping2D
 import tensorflow as tf
+from image_preprocessing.size_manipulations import resize_image
 import os
 
 
@@ -8,16 +9,21 @@ def train_save(features, values, nb_epoch=5):
     print("Training the model using the LeNet architecture, performing {} epochs".format(nb_epoch))
 
     model = Sequential()
-    model.add(Lambda(lambda x: tf.image.resize_images(x, (32, 32)), input_shape=(100, 320, 3)))
-    model.add(Conv2D(6, 5, 5, input_shape=(32, 32, 3), border_mode='valid'))
+    model.add(Cropping2D(cropping=((50, 20), (0, 0)), input_shape=(160, 320, 3)))
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
+    model.add(Lambda(resize_image))
+    model.add(Conv2D(6, 5, 5, border_mode='valid'))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
     model.add(Conv2D(16, 5, 5, border_mode='valid'))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
     model.add(Flatten())
-    model.add(Dense(120, activation='tanh'))
-    model.add(Dense(84, activation='tanh'))
+    model.add(Dense(120, activation='relu'))
+    model.add(Dropout(0.4))
+    model.add(Dense(84, activation='relu'))
+    model.add(Dropout(0.4))
+    model.add(Dense(24, activation='relu'))
     model.add(Dense(1))
 
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mse'])

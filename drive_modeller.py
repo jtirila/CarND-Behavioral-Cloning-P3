@@ -48,21 +48,7 @@ if __name__ == '__main__':
     # features = features[:256]
     # values = values[:256]
 
-    features = np.array(list(map(lambda x: x[60:, :, :], features)))
-
-    if modelname == 'alex':
-        print("About to resize images")
-        # Temporarily using scipy's imresize until I learn how this can be done in Keras
-        features = np.array(list(map(lambda x: imresize(x, (227, 227)), features)))
-        print("Finished resizing images")
-    elif modelname == 'lenet':
-        print("About to resize images")
-        # Temporarily using scipy's imresize until I learn how this can be done in Keras
-        print("Actually this will be skipped on this round.")
-        # features = np.array(list(map(lambda x: imresize(x, (32, 32, 3)), features)))
-        plt.imshow(features[0])
-        plt.show()
-        print("Finished resizing images")
+    # features = np.array(list(map(lambda x: x[60:, :, :], features)))
 
     if nb_epoch is not None:
         params = [features, values, nb_epoch]

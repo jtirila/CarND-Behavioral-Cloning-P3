@@ -1,14 +1,16 @@
 from keras.models import Sequential
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Input, merge, Lambda, Activation, Dropout
+from image_preprocessing.size_manipulations import resize_image
+from keras.backend import resize_images
 from keras import optimizers
 import tensorflow as tf
 import os
 
-
 def train_save(features, values, nb_epoch=10):
     print("Training the model using a simple multilayer perceptron architecture, performing {} epochs".format(nb_epoch))
     model = Sequential()
-    model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(100, 320, 3)))
+    model.add(Lambda(resize_image, input_shape=(160, 320, 3)))
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
     model.add(Flatten())
     model.add(Dense(200, activation='relu'))
     model.add(Dense(160, activation='relu'))
