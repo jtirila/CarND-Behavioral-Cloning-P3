@@ -11,11 +11,7 @@ def train_save(features, values, nb_epoch=5):
 
     datagen = ImageDataGenerator(
         featurewise_center=True,
-        featurewise_std_normalization=True,
-        rotation_range=4,
-        width_shift_range=0.1,
-        height_shift_range=0.1,
-        horizontal_flip=False)
+        featurewise_std_normalization=True, zca_whitening=True)
 
     features = features.astype('float32')
     datagen.fit(features)
