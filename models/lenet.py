@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Input, merge, Lambda, Activation, Dropout, Cropping2D
+from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 from image_preprocessing.size_manipulations import resize_image_32_32, resize_image_128_128
 from image_preprocessing.color_manipulations import enhance_contrast
@@ -7,6 +8,19 @@ import os
 
 
 def train_save(features, values, nb_epoch=5):
+
+    datagen = ImageDataGenerator(
+        featurewise_center=True,
+        featurewise_std_normalization=True,
+        rotation_range=10,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        horizontal_flip=True)
+
+    features = features.astype('float32')
+    datagen.fit(features)
+
+
     print("Training the model using the LeNet architecture, performing {} epochs".format(nb_epoch))
 
     model = Sequential()
@@ -34,6 +48,6 @@ def train_save(features, values, nb_epoch=5):
 
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mse'])
 
-    model.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=128)
+    model.fit_generator(datagen.flow(features, values, batch_size=128, shuffle=True), samples_per_epoch=len(features) // 128, nb_epoch=nb_epoch)
     model.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'lenet_model.h5'))
     return model
