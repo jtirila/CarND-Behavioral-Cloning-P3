@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Input, Lambda, Merge, Reshape, RepeatVector
+from image_preprocessing.size_manipulations import resize_image_227_227
 from keras import optimizers
 import tensorflow as tf
 import os
@@ -10,14 +11,11 @@ CONCAT_AXIS = 3
 def train_save(features, values, nb_epoch=5):
     print("Training the model using the AlexNet architecture, performing {} epochs".format(nb_epoch))
 
-    input_layer = Sequential()
-    input_layer.add(Lambda(lambda x: x, input_shape=(227, 227, 3)))
-
     branch_1_1 = Sequential()
     branch_2_1 = Sequential()
 
-    branch_1_1.add(input_layer)
-    branch_2_1.add(input_layer)
+    branch_1_1.add(Lambda(resize_image_227_227, input_shape=(160, 320, 3)))
+    branch_2_1.add(Lambda(resize_image_227_227, input_shape=(160, 320, 3)))
 
     branch_1_1.add(Conv2D(48, 11, 11, border_mode='same'))
     branch_1_1.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2), border_mode='same'))
@@ -81,7 +79,7 @@ def train_save(features, values, nb_epoch=5):
 
     output.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
 
-    output.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=24)
+    output.fit([features, features], values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=24)
     output.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'alexnet_model.h5'))
 
     return output
