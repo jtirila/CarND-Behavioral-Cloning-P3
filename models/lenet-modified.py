@@ -7,14 +7,35 @@ import os
 
 
 def train_save(features, values, nb_epoch=5):
-    print("Training the model using the LeNet architecture, performing {} epochs".format(nb_epoch))
+    print("Training the model using an extension of the LeNet architecture, performing {} epochs".format(nb_epoch))
 
     model = Sequential()
     model.add(Cropping2D(cropping=((60, 20), (20, 20)), input_shape=(160, 320, 3)))
+
     # Size now: (80, 280, 3)
 
     model.add(Lambda(lambda x: (x / 255.0) - 0.5))
-    model.add(Lambda(resize_image_32_32))
+    # model.add(Lambda(resize_image_128_128))
+
+    model.add(Conv2D(6, 17, 25, border_mode='valid'))
+    # size now: (64, 256, 6)
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 8), strides=(2, 8), border_mode='valid'))
+    # size now: (32, 32, 6)
+
+    # model.add(Conv2D(6, 11, 11, border_mode='valid'))
+    # # Size now: (118, 118, 6)
+    # model.add(Activation('relu'))
+    # model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
+    # model.add(Conv2D(6, 5, 5, border_mode='valid'))
+    # # Size now: (109, 109, 6)
+
+    # model.add(Conv2D(6, 11, 11, border_mode='valid'))
+    # # Size now: (98, 98, 6)
+    # model.add(Activation('relu'))
+    # model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
+    # # Size now: (49, 49, 6)
+    # model.add(Lambda(resize_image_32_32))
     model.add(Conv2D(6, 5, 5, border_mode='valid'))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
