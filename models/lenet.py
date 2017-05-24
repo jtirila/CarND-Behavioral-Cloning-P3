@@ -27,6 +27,7 @@ def train_save(features, values, nb_epoch=5):
     model.add(Dense(84, activation='relu'))
     model.add(Dropout(0.4))
     model.add(Dense(24, activation='relu'))
+    model.add(Dropout(0.4))
     model.add(Dense(1))
 
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mse'])
