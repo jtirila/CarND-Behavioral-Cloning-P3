@@ -10,7 +10,7 @@ def train_save(features, values, nb_epoch=5):
     print("Training the model using the LeNet architecture, performing {} epochs".format(nb_epoch))
 
     model = Sequential()
-    model.add(Cropping2D(cropping=((60, 20), (20, 20)), input_shape=(160, 320, 3)))
+    model.add(Cropping2D(cropping=((50, 30), (20, 20)), input_shape=(160, 320, 3)))
     # Size now: (80, 280, 3)
 
     model.add(Lambda(lambda x: (x / 255.0) - 0.5))
