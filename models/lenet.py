@@ -14,7 +14,7 @@ def train_save(features, values, nb_epoch=5):
     # Size now: (80, 280, 3)
 
     model.add(Lambda(lambda x: (x / 255.0) - 0.5))
-    model.add(Lambda(enhance_contrast))
+    # model.add(Lambda(enhance_contrast))
     model.add(Lambda(resize_image_32_32))
     model.add(Conv2D(6, 5, 5, border_mode='valid'))
     model.add(Activation('relu'))
