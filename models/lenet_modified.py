@@ -44,10 +44,11 @@ def train_save(features, values, nb_epoch=5):
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
     model.add(Flatten())
     model.add(Dense(120, activation='relu'))
-    model.add(Dropout(0.4))
+    model.add(Dropout(0.25))
     model.add(Dense(84, activation='relu'))
-    model.add(Dropout(0.4))
+    model.add(Dropout(0.25))
     model.add(Dense(24, activation='relu'))
+    model.add(Dropout(0.25))
     model.add(Dense(1))
 
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mse'])
