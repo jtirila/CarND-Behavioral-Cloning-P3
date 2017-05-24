@@ -11,13 +11,16 @@ def train_save(features, values, nb_epoch=5):
 
     model = Sequential()
     model.add(Cropping2D(cropping=((60, 20), (20, 20)), input_shape=(160, 320, 3)))
-    # model.add(Lambda(lambda x: (x / 255.0) - 0.5))
-    # model.add(Lambda(resize_image_128_128))
-    # model.add(Conv2D(6, 5, 5, border_mode='same'))
-    # model.add(Activation('relu'))
-    # model.add(MaxPooling2D(pool_size=(4, 4), strides=(4, 4), border_mode='same'))
-    model.add(Lambda(enhance_contrast))
-    model.add(Lambda(resize_image_32_32))
+
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
+    model.add(Lambda(resize_image_128_128))
+    model.add(Conv2D(6, 5, 5, border_mode='same'))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=(4, 4), border_mode='same'))
+    # model.add(Lambda(enhance_contrast))
+
+
+    # model.add(Lambda(resize_image_32_32))
     model.add(Conv2D(6, 5, 5, border_mode='valid'))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
