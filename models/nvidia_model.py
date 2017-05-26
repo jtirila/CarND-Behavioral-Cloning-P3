@@ -19,12 +19,14 @@ def train_save(features, values, nb_epoch=5):
     model.add(Conv2D(64, 3, 3, activation='relu'))
     model.add(Conv2D(64, 3, 3, activation='relu'))
     model.add(Flatten())
-    model.add(Dense(100))
-    model.add(Dense(30))
-    model.add(Dropout(0.5))
+    model.add(Dense(100, activation='relu'))
+    model.add(Dense(30, activation='relu'))
+    model.add(Dropout(0.3))
+    model.add(Dense(10, activation='relu'))
+    model.add(Dropout(0.2))
     model.add(Dense(1))
 
-    model.compile(loss='mae', optimizer='adam', metrics=['mse'])
+    model.compile(loss='mae', optimizer='adam', metrics=['mse', 'mae'])
 
     model.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=128)
     model.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'nvidia_model.h5'))
