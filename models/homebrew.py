@@ -39,8 +39,6 @@ def train_save(features, values, nb_epoch=5):
     model.add(Flatten())
     model.add(Dense(120, activation='relu'))
     model.add(Dropout(0.4))
-    model.add(Dense(84, activation='relu'))
-    model.add(Dropout(0.3))
     model.add(Dense(24, activation='relu'))
     model.add(Dropout(0.2))
     model.add(Dense(1))

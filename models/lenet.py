@@ -12,7 +12,6 @@ def train_save(features, values, nb_epoch=5):
     model = Sequential()
     model.add(Cropping2D(cropping=((50, 30), (20, 20)), input_shape=(160, 320, 3)))
     # Size now: (80, 280, 3)
-
     model.add(Lambda(lambda x: (x / 255.0) - 0.5))
     # model.add(Lambda(enhance_contrast))
     model.add(Lambda(resize_image_32_32))
@@ -34,5 +33,5 @@ def train_save(features, values, nb_epoch=5):
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mse'])
 
     model.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=128)
-    model.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'lenet_model.h5'))
+    model.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'hb_model.h5'))
     return model
