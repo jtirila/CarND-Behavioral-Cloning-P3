@@ -29,3 +29,5 @@ def train_save(features, values, nb_epoch=5):
 
     model.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=128)
     model.save(os.path.join(os.path.dirname(__file__), os.pardir, 'models', 'output', 'nvidia_model.h5'))
+
+    return model
