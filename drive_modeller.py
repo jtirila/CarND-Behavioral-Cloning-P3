@@ -14,14 +14,15 @@ import models.mlp as mlp
 import models.single_layer_dense as simple
 import models.simple_mlp as simple_mlp
 import models.single_layer_dense as sld
-import models.homebrew as hb 
+import models.homebrew as hb
+import models.nvidia_model as nvidia
 from image_preprocessing.load_images import read_images_and_steering_angles
 
 SIMPLE_DATA_BASE_PATH = os.path.join(os.path.dirname(__file__),
         os.pardir, 
         os.pardir, 'data', 'batch_1')
 
-MODEL_LOOKUP_DICT = {'alex': alex, 'simple': simple, 'simple_mlp': simple_mlp, 'sld': sld, 'lenet': lenet, 'lenet_mod': lenet_mod, 'mlp': mlp, 'hb': hb}
+MODEL_LOOKUP_DICT = {'alex': alex, 'simple': simple, 'simple_mlp': simple_mlp, 'sld': sld, 'lenet': lenet, 'lenet_mod': lenet_mod, 'mlp': mlp, 'hb': hb, 'nvidia': nvidia}
 
 
 if __name__ == '__main__':
