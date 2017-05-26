@@ -7,10 +7,11 @@ import os
 
 
 def train_save(features, values, nb_epoch=5):
-    print("Training the model using the LeNet architecture, performing {} epochs".format(nb_epoch))
+    print("Training the model using the NVIDIA architecture, performing {} epochs".format(nb_epoch))
     model = Sequential()
 
     model.add(Cropping2D(cropping=((70, 25), (0, 0)), input_shape=(160, 320, 3)))
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
 
     model.add(Conv2D(24, 5, 5, subsample=(2,2), activation='relu'))
     model.add(Conv2D(36, 5, 5, subsample=(2,2), activation='relu'))
