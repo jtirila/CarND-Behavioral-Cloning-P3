@@ -30,13 +30,16 @@ def train_save(features, values, nb_epoch=5):
     model.add(Conv2D(6, 5, 5, border_mode='valid'))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
+    # size now: (14, 14, 6)
 
     model.add(Conv2D(16, 5, 5, border_mode='valid'))
-    # Size: 28x28
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
+    # size: (5, 5, 16)
 
     model.add(Flatten())
+    # sizenow : 400
+
     model.add(Dense(120, activation='relu'))
     model.add(Dropout(0.4))
     model.add(Dense(24, activation='relu'))
