@@ -20,6 +20,7 @@ def train_save(features, values, nb_epoch=5):
     model.add(Conv2D(64, 3, 3, activation='relu'))
     model.add(Flatten())
     model.add(Dense(100, activation='relu'))
+    model.add(Dropout(0.4))
     model.add(Dense(30, activation='relu'))
     model.add(Dropout(0.3))
     model.add(Dense(10, activation='relu'))
