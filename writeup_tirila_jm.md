@@ -18,9 +18,10 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [nvidia_architecture]: ./images/cnn_architecture.png "Model Visualization"
-[flipped_image]: ./images/flipped_image.jpg "Grayscaling"
-[correcting_from_gray_edge]: ./images/correction_from_gray_edge.jpg "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
+[flipped_image]: ./images/flipped_image.jpg "Flipped image"
+[correcting_from_gray_edge]: ./images/correction_from_gray_edge.jpg "Recovery Image from different texture"
+[correction_from_right]: ./images/correction_from_right.jpg "Recovery Image from right"
+[correction_from_left]: ./images/correction_from_left.jpg "Recovery Image from left"
 [image5]: ./examples/placeholder_small.png "Recovery Image"
 [image6]: ./examples/placeholder_small.png "Normal Image"
 [image7]: ./examples/placeholder_small.png "Flipped Image"
@@ -192,8 +193,8 @@ the center of the track and only then start recording again.
 
 These images show what a recovery looks like starting from the edges FIXME: include images:
 
-![Recovering from right][recovering_from_right]
-![Recovering from right][recovering_from_left]
+![Recovering from right][correction_from_right]
+![Recovering from left][correction_from_left]
 ![Recovering from a differently textured edge][correcting_from_gray_edge]
 
 I then also tried repeating this process on track two in order to get more data points. However, in my experiments, 
