@@ -163,7 +163,7 @@ For example, here is an image that has then been flipped:
 After the collection process, I had X number of data points. I then preprocessed this data by scaling and centering the 
 rgb values to the -0.5..0.5 range by dividing by 255 and subtracting 0.5. 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
 I used this training data for training the model. The validation set helped determine if the model was over or under 
 fitting. The ideal number of epochs was 5 as evidenced by a careful monitoring of the training and validation losses. 
