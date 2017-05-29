@@ -22,6 +22,7 @@ The goals / steps of this project are the following:
 [correcting_from_gray_edge]: ./images/correction_from_gray_edge.jpg "Recovery Image from different texture"
 [correction_from_right]: ./images/correction_from_right.jpg "Recovery Image from right"
 [correction_from_left]: ./images/correction_from_left.jpg "Recovery Image from left"
+[center_lane_driving]: ./images/center_lane_driving.jpg "Center lane driving"
 [image5]: ./examples/placeholder_small.png "Recovery Image"
 [image6]: ./examples/placeholder_small.png "Normal Image"
 [image7]: ./examples/placeholder_small.png "Flipped Image"
@@ -56,13 +57,14 @@ pipeline I used for training and validating the model, and it contains comments 
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with first 5x5 and subsequently also 3x3 filter sizes and depths 
+My model is a slight modification of the Nvidia architecture presented in the lecture notes. It is a 
+convolution neural network with first 5x5 and subsequently also 3x3 filter sizes and depths 
 between 24 and 64 (model.py lines FIXME: 18-24). These convolutional layers are followed by fully connected layers, 
 starting with one containing 100 neurons, and in the subsequent layers the neuron count is gradually reduced to 1 
 to get scalar output. 
 
-The model includes RELU layers to introduce nonlinearity (code lines FIXME), and the data is normalized in the model using 
-a Keras lambda layer (code line FIXME). 
+The model includes RELU layers to introduce nonlinearity (code lines FIXME), and the data is normalized in the
+model using a Keras lambda layer (code line FIXME). 
 
 #### 2. Reducing overfitting in the model
 
@@ -166,7 +168,7 @@ documented above, and finally I was able to construct a solution that would enab
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24), documented briefly above, is illustrated in the following 
+The final model architecture (model.py lines FIXME 18-24), documented briefly above, is illustrated in the following 
 image, reproduced from the Nvidia blog: 
 
 ![An image of the architecture I used, based on the Nvidia solution][nvidia_architecture]
@@ -178,7 +180,11 @@ of the architecture.
 #### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first tried recording mostly center lane driving. Here is an example image of 
-center lane driving: FIXME During my initial attempts at training the model, I came to the conclusion that I had recorded too much of redundant 
+center lane driving: 
+
+![Driving in the center][center_lane_driving]
+
+During my initial attempts at training the model, I came to the conclusion that I had recorded too much of redundant 
 center line driving behavior, and the parts of the track where the vehicle was not behaving well needed to be 
 emphasized in the training material. Subsequently, I included more of correcting behavior and portions of the track 
 where the edges or the texture of the lane were different or changing.  
