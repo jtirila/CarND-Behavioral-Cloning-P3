@@ -115,7 +115,10 @@ I also decided to let go of the idea of advanced models.
 I then decided to start with something simple, try different approaches and was hoping to finally settle on something 
 that drives the track successfully. 
   
-As a next step, kind of to achieve a reference level, I designed a simple multilayer perceptron model. 
+As a next step, kind of to achieve a reference level, I designed a simple multilayer perceptron model. The basic idea
+was the same as in the lecture material: to get the generic pipeline for training and testing to work, without worrying
+too much about the actual model. As expected, I got everything working so I was able to get the model driving, but 
+the performance of the model was pretty bad. 
 
 My next attempt was to experiment with different modifications of the LeNet architecture. I tried adding new layers to 
 gradually reduce the number of pixel dimensions to 32x32 for the standard LeNet, and then sticking to the stock LeNet 
@@ -188,8 +191,6 @@ During my initial attempts at training the model, I came to the conclusion that 
 center line driving behavior, and the parts of the track where the vehicle was not behaving well needed to be 
 emphasized in the training material. Subsequently, I included more of correcting behavior and portions of the track 
 where the edges or the texture of the lane were different or changing.  
-
-![alt text][image2]
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that 
 the vehicle would learn to return the center after deviating towards the edges. 
