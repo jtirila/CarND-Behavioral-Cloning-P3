@@ -63,17 +63,18 @@ between 24 and 64 (model.py lines 54-58). These convolutional layers are followe
 starting with one containing 100 neurons, and in the subsequent layers the neuron count is gradually reduced to 1 
 to get scalar output. 
 
-The model includes RELU layers to introduce nonlinearity (lines 54-58, and again lines 61, 63 and 65), and the 
-data is normalized in the model using a Keras lambda layer (code line FIXME). The normalization layer just zero-centers 
+The model includes RELU layers to introduce nonlinearity (lines 54-58), and the 
+data is normalized in the model using a Keras lambda layer (code line 53). The normalization layer just zero-centers 
  the data and scales it between -0.5 and 0.5.
-
+ 
 #### 2. Reducing overfitting in the model
 
-The model contains four dropout layers in order to reduce overfitting (model.py lines 60, 62, 64 and 66). 
+The model contains four dropout layers in order to reduce overfitting (model.py lines 62 and 64). 
 
 The model was trained and validated on different data sets to ensure that the model was not overfitting (code lines 
 70, validation split). The model was tested by running it through the simulator and ensuring that the vehicle 
-could stay on the track.
+could stay on the track. I modified the drive.py script used to operate the model file in the simulator a bit, 
+increasing the target speed to 16 mph. 
 
 #### 3. Model parameter tuning
 
@@ -221,7 +222,9 @@ Of course, when flipping the images, I also inverted the steering angles. Otherw
 be nonsensical. 
 
 After the collection process, I had FIXME: number of data points. I then preprocessed this data by scaling and centering the 
-rgb values to the -0.5..0.5 range by dividing by 255 and subtracting 0.5. 
+rgb values to the -0.5..0.5 range by dividing by 255 and subtracting 0.5. Another preprocessing step was to crop the 
+images, omitting 70 pixels from the top and 20 from the bottom, as well as 8 pixels from each side (see 
+code line 52).
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
@@ -231,5 +234,6 @@ Below is the record of a typical run of the model using too many epochs. As can 
 the training loss continues to drop. However, the drop is not really significant, especially taking into account that 
 validaiton loss starts to increase.
 
-
 I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+
