@@ -191,11 +191,15 @@ In this process, I figured it would be detrimental to the model if the movements
 were included in the training set, so I turned recording off while approaching the edges, then turned the tires toward 
 the center of the track and only then start recording again. 
 
-These images show what a recovery looks like starting from the edges FIXME: include images:
+These images show what a recovery looks like starting from the edges:
 
 ![Recovering from right][correction_from_right]
 ![Recovering from left][correction_from_left]
 ![Recovering from a differently textured edge][correcting_from_gray_edge]
+
+The recovery portions were recorded throughout the track. Here I wanted to include images from 
+parts of the track where also the texture or surroundings of the track varied a bit from what was
+mostly seen.
 
 I then also tried repeating this process on track two in order to get more data points. However, in my experiments, 
 this did not improve the model so I ended up not using the data from track two. 
