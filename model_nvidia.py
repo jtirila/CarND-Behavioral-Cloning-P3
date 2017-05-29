@@ -14,7 +14,6 @@ def run_nvidia_training(nb_epoch, data_path):
     print("About to load the images from files")
     features, values = read_images_and_steering_angles(data_path)
     print("steering angle max {}, min {}".format(max(values), min(values)))
-
     print("Finished loading the images from files")
 
     # Building the params for the train_save function, depending on whether number of epochs has been provided or not
@@ -36,7 +35,7 @@ def run_nvidia_training(nb_epoch, data_path):
     print("Finished evaluating the model")
 
     print("About to produce some sample predictions")
-    for num in range(min(len(features), 128)):
+    for num in range(min(len(features), 48)):
         print("Prediction: {}, training value: {}".format(model.predict(np.array([features[num]])), format(values[num])))
 
 
@@ -62,11 +61,11 @@ def train_save(features, values, nb_epoch=5):
     model.add(Conv2D(64, 3, 3, activation='relu'))
     model.add(Conv2D(64, 3, 3, activation='relu'))
     model.add(Flatten())
-    model.add(Dropout(0.35))
+    model.add(Dropout(0.28))
     model.add(Dense(100, activation='relu'))
-    model.add(Dropout(0.35))
+    model.add(Dropout(0.28))
     model.add(Dense(30, activation='relu'))
-    model.add(Dropout(0.35))
+    model.add(Dropout(0.28))
     model.add(Dense(10, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(1))

@@ -57,14 +57,14 @@ if __name__ == '__main__':
         params = [features, values, nb_epoch]
     else:
         params = [features, values]
-    # TODO: do something about the saved model name once all the models return it?
+
     print("About to train and save the model.")
     features, values = shuffle(features, values)
     model = MODEL_LOOKUP_DICT[modelname].train_save(*params)
     features, values = shuffle(features, values)
     print("About to evaluate the model")
 
-    # TODO: this is basically just PoC / mockup code.
+    # Print some evaluation statistics based on a small sample of the training data
     model.evaluate(features[:128], values[:128])
     print("Finished evaluating the model")
 
