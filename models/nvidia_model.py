@@ -16,7 +16,6 @@ def train_save(features, values, nb_epoch=5):
     model.add(Conv2D(24, 5, 5, subsample=(2, 2), activation='relu'))
     model.add(Conv2D(36, 5, 5, subsample=(2, 2), activation='relu'))
     model.add(Conv2D(48, 5, 5, subsample=(2, 2), activation='relu'))
-    model.add(Conv2D(48, 5, 5, subsample=(2, 2), border_mode='same', activation='relu'))
     model.add(Conv2D(64, 3, 3, activation='relu'))
     model.add(Conv2D(64, 3, 3, activation='relu'))
     model.add(Flatten())
