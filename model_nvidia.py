@@ -5,7 +5,6 @@ import os
 import sys
 import csv
 import numpy as np
-
 import cv2
 
 
@@ -13,30 +12,27 @@ def run_nvidia_training(nb_epoch, data_path):
 
     print("About to load the images from files")
     features, values = read_images_and_steering_angles(data_path)
-    print("steering angle max {}, min {}".format(max(values), min(values)))
     print("Finished loading the images from files")
 
+    # Print the extreme steering angles
+    print("steering angle max {}, min {}".format(max(values), min(values)))
+
     # Building the params for the train_save function, depending on whether number of epochs has been provided or not
+
+    # Shuffle the training data
+    features, values = shuffle(features, values)
     if nb_epoch is not None:
         params = [features, values, nb_epoch]
     else:
         params = [features, values]
 
     print("About to train and save the model.")
-    features, values = shuffle(features, values)
     model = train_save(*params)
-
-    # Shuffling again for the brief evaluation phase
-    features, values = shuffle(features, values)
-    print("About to evaluate the model")
-
-    # Print some evaluation metrics from a small sample of the data
-    model.evaluate(features[:128], values[:128])
-    print("Finished evaluating the model")
 
     print("About to produce some sample predictions")
     for num in range(min(len(features), 48)):
-        print("Prediction: {}, training value: {}".format(model.predict(np.array([features[num]])), format(values[num])))
+        print("Prediction: {}, training value: {}".format(model.predict(np.array([features[num]])),
+                                                          format(values[num])))
 
 
 def train_save(features, values, nb_epoch=5):
@@ -44,7 +40,7 @@ def train_save(features, values, nb_epoch=5):
     
     :param features: a numpy array containing the input images
     :param values: the steering angles, should be the same size as features and in same order
-    :param nb_epoch: an optional epoch count to train.
+    :param nb_epoch: an optional epoch count to train, defaults to 5 if not provided
     
     :return: The Keras model object."""
 
@@ -63,9 +59,8 @@ def train_save(features, values, nb_epoch=5):
     model.add(Flatten())
     model.add(Dropout(0.35))
     model.add(Dense(100, activation='relu'))
-    model.add(Dropout(0.2))
     model.add(Dense(30, activation='relu'))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.35))
     model.add(Dense(10, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(1))
@@ -137,6 +132,7 @@ def negate_steering_angles(base_path):
 
 
 if __name__ == "__main__":
+
     # Some debug prints
     print("Running {}".format(sys.argv[0]))
     print("All args: {}".format(sys.argv))

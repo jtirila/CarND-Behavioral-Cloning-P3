@@ -59,20 +59,21 @@ pipeline I used for training and validating the model, and it contains comments 
 
 My model is a slight modification of the Nvidia architecture presented in the lecture notes. It is a 
 convolution neural network with first 5x5 and subsequently also 3x3 filter sizes and depths 
-between 24 and 64 (model.py lines FIXME: 18-24). These convolutional layers are followed by fully connected layers, 
+between 24 and 64 (model.py lines 54-58). These convolutional layers are followed by fully connected layers, 
 starting with one containing 100 neurons, and in the subsequent layers the neuron count is gradually reduced to 1 
 to get scalar output. 
 
-The model includes RELU layers to introduce nonlinearity (code lines FIXME), and the data is normalized in the
-model using a Keras lambda layer (code line FIXME). 
+The model includes RELU layers to introduce nonlinearity (lines 54-58, and again lines 61, 63 and 65), and the 
+data is normalized in the model using a Keras lambda layer (code line FIXME). The normalization layer just zero-centers 
+ the data and scales it between -0.5 and 0.5.
 
 #### 2. Reducing overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines FIXME 21). 
+The model contains four dropout layers in order to reduce overfitting (model.py lines 60, 62, 64 and 66). 
 
 The model was trained and validated on different data sets to ensure that the model was not overfitting (code lines 
-FIXME 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on 
-the track.
+70, validation split). The model was tested by running it through the simulator and ensuring that the vehicle 
+could stay on the track.
 
 #### 3. Model parameter tuning
 
