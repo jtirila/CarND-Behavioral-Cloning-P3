@@ -1,6 +1,6 @@
-#**Behavioral Cloning** 
+# **Behavioral Cloning** 
 
-##Writeup, Juha-Matti Tirilä 
+## Writeup, Juha-Matti Tirilä 
 
 
 ---
