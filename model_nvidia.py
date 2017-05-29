@@ -53,7 +53,7 @@ def train_save(features, values, nb_epoch=5):
     # Defining the model as in the lecture video, basically. Minor modifications to the cropping, dropout and
     # deep layer sizes
     model = Sequential()
-    model.add(Cropping2D(cropping=((68, 20), (5, 5)), input_shape=(160, 320, 3)))
+    model.add(Cropping2D(cropping=((60, 20), (5, 5)), input_shape=(160, 320, 3)))
     model.add(Lambda(lambda x: (x / 255.0) - 0.5))
     model.add(Conv2D(24, 5, 5, subsample=(2, 2), activation='relu'))
     model.add(Conv2D(36, 5, 5, subsample=(2, 2), activation='relu'))
