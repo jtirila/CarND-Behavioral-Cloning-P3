@@ -136,6 +136,6 @@ if __name__ == "__main__":
     # Quitting if not using exactly one or two command line parameter
     nb_epoch = None
     if len(sys.argv) > 2:
-        nb_epoch = int(sys.argv[3])
+        nb_epoch = int(sys.argv[2])
 
     run_nvidia_training(nb_epoch, sys.argv[1])
