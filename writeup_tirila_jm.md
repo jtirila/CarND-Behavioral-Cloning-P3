@@ -118,13 +118,15 @@ To combat the overfitting, I modified the model so that ...
 
 Then I ... 
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots 
+where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers 
+and layer sizes ...
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
@@ -132,11 +134,19 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 ####3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I first recorded some center lane driving. Here is an example image of center lane driving:
+
+During my initial attempts at training the model, I came to the conclusion that I had recorded too much of redundant 
+center line driving behavior, and the parts of the track where the vehicle was not behaving well needed to be 
+emphasized in the training material. Subsequently, I included more of correcting behavior and portions of the track 
+where the edges or the texture of the lane were different or changing.  
 
 ![alt text][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that 
+the vehicle would learn to return the center after deviating towards the edges. 
+In this process, I figured it would be detrimental to the model if the movements that lead toward the edges  
+.... These images show what a recovery looks like starting from ... :
 
 ![alt text][image3]
 ![alt text][image4]
@@ -144,16 +154,22 @@ I then recorded the vehicle recovering from the left side and right sides of the
 
 Then I repeated this process on track two in order to get more data points.
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+To augment the data sat, I also flipped images and angles thinking that this would lead to better generalization.  
+For example, here is an image that has then been flipped:
 
 ![alt text][image6]
 ![alt text][image7]
 
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
+After the collection process, I had X number of data points. I then preprocessed this data by scaling and centering the 
+rgb values to the -0.5..0.5 range by dividing by 255 and subtracting 0.5. 
 
 I finally randomly shuffled the data set and put Y% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under 
+fitting. The ideal number of epochs was 5 as evidenced by a careful monitoring of the training and validation losses. 
+Below is the record of a typical run of the model using too many epochs. As can be seen in the data, after 5 epochs, 
+the training loss continues to drop. However, the drop is not really significant, especially taking into account that 
+validaiton loss starts to increase.
+
+
+I used an adam optimizer so that manually training the learning rate wasn't necessary.
