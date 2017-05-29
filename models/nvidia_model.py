@@ -10,8 +10,8 @@ def train_save(features, values, nb_epoch=5):
     print("Training the model using the NVIDIA architecture, performing {} epochs".format(nb_epoch))
     model = Sequential()
 
-    model.add(Cropping2D(cropping=((67, 20), (5, 5)), input_shape=(160, 320, 3)))
-    model.add(Lambda(lambda x: (x / 200.0) - 0.5))
+    model.add(Cropping2D(cropping=((70, 20), (8, 8)), input_shape=(160, 320, 3)))
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
     # model.add(Lambda(enhance_contrast))
     model.add(Conv2D(24, 5, 5, subsample=(2, 2), activation='relu'))
     model.add(Conv2D(36, 5, 5, subsample=(2, 2), activation='relu'))
