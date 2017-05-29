@@ -59,12 +59,12 @@ def train_save(features, values, nb_epoch=5):
     model.add(Flatten())
     model.add(Dense(100))
     model.add(Dense(50))
-    model.add(Dropout(0.35))
-    model.add(Dense(10))
+    model.add(Dropout(0.5))
+    model.add(Dense(20))
     model.add(Dropout(0.5))
     model.add(Dense(1))
 
-    model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
+    model.compile(loss='mae', optimizer='adam', metrics=['mse', 'mae'])
     model.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=128)
     model.save('model.h5')
 
