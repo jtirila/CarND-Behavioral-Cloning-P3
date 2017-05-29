@@ -18,8 +18,8 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [nvidia_architecture]: ./images/cnn_architecture.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
+[flipped_image]: ./images/flipped_image.jpg "Grayscaling"
+[correcting_from_gray_edge]: ./images/correction_from_gray_edge.jpg "Recovery Image"
 [image4]: ./examples/placeholder_small.png "Recovery Image"
 [image5]: ./examples/placeholder_small.png "Recovery Image"
 [image6]: ./examples/placeholder_small.png "Normal Image"
@@ -165,20 +165,19 @@ documented above, and finally I was able to construct a solution that would enab
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers 
-and layer sizes ...
-
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project 
-rubric)
+The final model architecture (model.py lines 18-24), documented briefly above, is illustrated in the following 
+image, reproduced from the Nvidia blog: 
 
 ![An image of the architecture I used, based on the Nvidia solution][nvidia_architecture]
 
+As can be seen, I have slightly modified the network by changing the number of neurons in the fully connected layers
+and introducing dropout layers after all the dense layers and also the flattening layer before the fully connected part
+of the architecture.
+
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded some center lane driving. Here is an example image of center lane 
-driving:
-
-During my initial attempts at training the model, I came to the conclusion that I had recorded too much of redundant 
+To capture good driving behavior, I first tried recording mostly center lane driving. Here is an example image of 
+center lane driving: FIXME During my initial attempts at training the model, I came to the conclusion that I had recorded too much of redundant 
 center line driving behavior, and the parts of the track where the vehicle was not behaving well needed to be 
 emphasized in the training material. Subsequently, I included more of correcting behavior and portions of the track 
 where the edges or the texture of the lane were different or changing.  
@@ -188,22 +187,27 @@ where the edges or the texture of the lane were different or changing.
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that 
 the vehicle would learn to return the center after deviating towards the edges. 
 In this process, I figured it would be detrimental to the model if the movements that lead toward the edges  
-.... These images show what a recovery looks like starting from ... :
+were included in the training set, so I turned recording off while approaching the edges, then turned the tires toward 
+the center of the track and only then start recording again. 
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+These images show what a recovery looks like starting from the edges FIXME: include images:
 
-I then I also repeated this process on track two in order to get more data points. However, in my experiments, 
+![Recovering from right][recovering_from_right]
+![Recovering from right][recovering_from_left]
+![Recovering from a differently textured edge][correcting_from_gray_edge]
+
+I then also tried repeating this process on track two in order to get more data points. However, in my experiments, 
 this did not improve the model so I ended up not using the data from track two. 
 
 To augment the data sat, I also flipped images and angles thinking that this would lead to better generalization.  
 For example, here is an image that has then been flipped:
 
-![alt text][image6]
-![alt text][image7]
+![An image that has been flipped][flipped_image]
 
-After the collection process, I had X number of data points. I then preprocessed this data by scaling and centering the 
+Of course, when flipping the images, I also inverted the steering angles. Otherwise the training data would  
+be nonsensical. 
+
+After the collection process, I had FIXME: number of data points. I then preprocessed this data by scaling and centering the 
 rgb values to the -0.5..0.5 range by dividing by 255 and subtracting 0.5. 
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
