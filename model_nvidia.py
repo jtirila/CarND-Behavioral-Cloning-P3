@@ -9,7 +9,7 @@ import numpy as np
 import cv2
 
 
-def run_nvidia_training(nb_epochs, data_path):
+def run_nvidia_training(nb_epoch, data_path):
 
     print("About to load the images from files")
     features, values = read_images_and_steering_angles(data_path)
@@ -17,24 +17,21 @@ def run_nvidia_training(nb_epochs, data_path):
 
     print("Finished loading the images from files")
 
-    # Temporarily using a smaller set of training data
-    # features = features[:256]
-    # values = values[:256]
-
-    # features = np.array(list(map(lambda x: x[60:, :, :], features)))
-
+    # Building the params for the train_save function, depending on whether number of epochs has been provided or not
     if nb_epoch is not None:
         params = [features, values, nb_epoch]
     else:
         params = [features, values]
-    # TODO: do something about the saved model name once all the models return it?
+
     print("About to train and save the model.")
     features, values = shuffle(features, values)
     model = train_save(*params)
+
+    # Shuffling again for the brief evaluation phase
     features, values = shuffle(features, values)
     print("About to evaluate the model")
 
-    # TODO: this is basically just PoC / mockup code.
+    # Print some evaluation metrics from a small sample of the data
     model.evaluate(features[:128], values[:128])
     print("Finished evaluating the model")
 
@@ -44,12 +41,21 @@ def run_nvidia_training(nb_epochs, data_path):
 
 
 def train_save(features, values, nb_epoch=5):
-    print("Training the model using the NVIDIA architecture, performing {} epochs".format(nb_epoch))
-    model = Sequential()
+    """Trains the model, and saved it into a file.
+    
+    :param features: a numpy array containing the input images
+    :param values: the steering angles, should be the same size as features and in same order
+    :param nb_epoch: an optional epoch count to train.
+    
+    :return: The Keras model object."""
 
+    print("Training the model using the NVIDIA architecture, performing {} epochs".format(nb_epoch))
+
+    # Defining the model as in the lecture video, basically. Minor modifications to the cropping, dropout and
+    # deep layer sizes
+    model = Sequential()
     model.add(Cropping2D(cropping=((67, 20), (5, 5)), input_shape=(160, 320, 3)))
-    model.add(Lambda(lambda x: (x / 200.0) - 0.5))
-    # model.add(Lambda(enhance_contrast))
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
     model.add(Conv2D(24, 5, 5, subsample=(2, 2), activation='relu'))
     model.add(Conv2D(36, 5, 5, subsample=(2, 2), activation='relu'))
     model.add(Conv2D(48, 5, 5, subsample=(2, 2), activation='relu'))
@@ -64,6 +70,7 @@ def train_save(features, values, nb_epoch=5):
     model.add(Dense(10, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(1))
+
     model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
     model.fit(features, values, validation_split=0.2, shuffle=True, nb_epoch=nb_epoch, batch_size=128)
     model.save('model.h5')
@@ -101,19 +108,23 @@ def read_images_and_steering_angles(base_path):
 # NOTE: This method is not used in the model as such but was rather used in data augmentation phase. Included for
 # NOTE: completeness
 def negate_steering_angles(base_path):
-    """Reads the driving log, multiplies each steering measurement by -1 and saves the log back
+    """Reads the driving log, multiplies each steering measurement by -1 and saves the log back. 
+    
+    NOTE: this was a one-off script using hard coded filenames and cannot be reused as such. 
     
     :param base_path: A directory path where the csv file and the images are to be found
     :return: Nothing, just saves a new file with negeated angles."""
 
     lines = []
+
+    # Inverting the angles
     with open(os.path.join(base_path, 'driving_log.csv')) as csvfile:
         reader = csv.reader(csvfile)
         for line in reader:
             line[3] = str(-1.0 * float(line[3]))
             lines.append(line)
 
-
+    # Renaming the files in driving_log
     with open(os.path.join(base_path, 'driving_log_2.csv'), 'w') as csvfile:
         writer = csv.writer(csvfile, delimiter=",")
         for line in lines:
@@ -130,10 +141,11 @@ if __name__ == "__main__":
     # Some debug prints
     print("Running {}".format(sys.argv[0]))
     print("All args: {}".format(sys.argv))
-    assert len(sys.argv) in (2, 3)
-    print("Using data directory {}".format(sys.argv[1]))
 
     # Quitting if not using exactly one or two command line parameter
+    assert len(sys.argv) in (2, 3)
+
+    print("Using data directory {}".format(sys.argv[1]))
     nb_epoch = None
     if len(sys.argv) > 2:
         nb_epoch = int(sys.argv[2])
