@@ -23,9 +23,6 @@ The goals / steps of this project are the following:
 [correction_from_right]: ./images/correction_from_right.jpg "Recovery Image from right"
 [correction_from_left]: ./images/correction_from_left.jpg "Recovery Image from left"
 [center_lane_driving]: ./images/center_lane_driving.jpg "Center lane driving"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
