@@ -77,9 +77,40 @@ For details about how I created the training data, see the next section.
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+##### AlexNet
+The overall strategy for deriving a model architecture was to first try experimenting with some of the advanced architectures like Alexnet.  
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+However, I soon run into problems with system resources also on AWS. Meanwhile, some participants reported they had trained models successfully using quite simple architectures so 
+I also decided to let go of the idea of advanced models. 
+  
+##### Back to Basics  
+
+I then decided to start with something simple, try different approaches and was hoping to finally settle on something that drives the track successfully. 
+  
+As a next step, kind of to achieve a reference level, I designed a simple multilayer perceptron model. 
+
+My next attempt was to experiment with different modifications of the LeNet architecture. I tried adding new layers to 
+gradually reduce the number of pixel dimensions to 32x32 for the standard LeNet, and then sticking to the stock LeNet architecture from there on. 
+
+I also tried different image resize operations to keep the architecture to a basic LeNet. 
+
+Another approach I tried was to preprocess the image using various approaches, employing preprocessing Lambda layers in my Keras model and also using the ImageDataGenerator class of Keras.
+
+However, I was not able to produce a successful model with any of these approaches woud
+
+It should be noted that at various points, after discovering the models I tried were struggling at specific portions of the track, I recorded more training data, on some occasions completely from scratch. I tried to very carefully collect correcting movements both near the center line and closer to the edges of the road. 
+ 
+As a conclusion to my attempts with these simpler models, I abandoned the (modified) LeNet approach and decided to try something else. 
+
+###### Review of the lecture material
+
+Looking for new ideas, I resorted to the lecture material and finally discovered the Nvidia model. Straight away after giving it a shot, I noticed it performed significantly better than my previous attempts. 
+  
+From this point on, I decided to stick to the Nvidia architecture and find a version of it that would successfully drive the track. 
+
+
+
+#### 
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
